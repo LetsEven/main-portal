@@ -57,7 +57,7 @@ export interface Branch {
 
 export interface QrCode {
   id: string;
-  code: string; // Código único del QR (ej: XQ-AI-A3B7K9)
+  code: string; // Código único del QR
   clientId: string; // FK hacia Client
   restaurantId: number; // FK hacia Restaurant
   branchId: string; // FK hacia Branch
