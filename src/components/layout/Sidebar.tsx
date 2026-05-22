@@ -6,6 +6,7 @@ import {
   HomeIcon,
   ListIcon,
   QrCodeIcon,
+  Table2Icon,
   SettingsIcon,
   LogOutIcon,
 } from "lucide-react";
@@ -51,6 +52,11 @@ const Sidebar: React.FC = () => {
       path: "/qr",
       label: "QR Manager",
       icon: <QrCodeIcon className="h-5 w-5" />,
+    },
+    {
+      path: "/tabulator",
+      label: "Tabulator",
+      icon: <Table2Icon className="h-5 w-5" />,
     },
     {
       path: "/settings",
