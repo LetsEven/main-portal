@@ -82,11 +82,20 @@ function Stepper({
   suffix = "%",
   decimals = 1,
 }: StepperProps) {
+  const display = decimals === 0 ? String(value) : value.toFixed(decimals);
+  const [raw, setRaw] = useState<string | null>(null);
+
   const nudge = (dir: number) => {
     const next = parseFloat((value + dir * step).toFixed(8));
     onChange(Math.min(max, Math.max(min, next)));
   };
-  const display = decimals === 0 ? String(value) : value.toFixed(decimals);
+
+  const commit = (str: string) => {
+    const v = parseFloat(str);
+    if (!isNaN(v)) onChange(Math.min(max, Math.max(min, v)));
+    setRaw(null);
+  };
+
   return (
     <div style={{ marginBottom: 12 }}>
       <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 5 }}>
@@ -128,13 +137,14 @@ function Stepper({
         >
           <input
             type="number"
-            value={display}
+            value={raw !== null ? raw : display}
             min={min}
             max={max}
             step={step}
-            onChange={(e) => {
-              const v = parseFloat(e.target.value);
-              if (!isNaN(v)) onChange(Math.min(max, Math.max(min, v)));
+            onChange={(e) => setRaw(e.target.value)}
+            onBlur={(e) => commit(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") (e.target as HTMLInputElement).blur();
             }}
             style={{
               width: "100%",
