@@ -7,16 +7,16 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Main Portal - Even",
+  title: "Portal de Super Administrador | Even",
   description: "Portal de Super Administrador de Even",
   icons: {
     icon: [
       {
-        url: "/logo-short-green.webp",
+        url: "/even-assets/even-icon.png",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/logo-short-white.webp",
+        url: "/even-assets/even-icon.png",
         media: "(prefers-color-scheme: dark)",
       },
     ],
