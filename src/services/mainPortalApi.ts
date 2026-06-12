@@ -179,6 +179,28 @@ export interface MainPortalStats {
   };
 }
 
+export interface Lead {
+  id: string;
+  restaurantName: string;
+  contactName: string;
+  email: string;
+  phone: string | null;
+  city: string | null;
+  businessType: string | null;
+  createdAt: string;
+}
+
+export interface LeadsResponse {
+  data: Lead[];
+  total: number;
+}
+
+export interface LeadsParams {
+  limit?: number;
+  offset?: number;
+  search?: string;
+}
+
 // ===============================================
 // CLASE PRINCIPAL DEL SERVICIO API
 // ===============================================
@@ -408,6 +430,47 @@ class MainPortalApiService {
       },
       token,
     );
+  }
+
+  async getAllLeads(
+    token: string,
+    params: LeadsParams = {},
+  ): Promise<LeadsResponse> {
+    const query = new URLSearchParams();
+    if (params.limit !== undefined) query.append("limit", String(params.limit));
+    if (params.offset !== undefined)
+      query.append("offset", String(params.offset));
+    if (params.search) query.append("search", params.search);
+
+    const qs = query.toString();
+    const url = `${MAIN_PORTAL_BASE}/leads${qs ? `?${qs}` : ""}`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.message || `HTTP error ${response.status}`);
+    }
+
+    const json = await response.json();
+    return {
+      total: json.total ?? 0,
+      data: (json.data || []).map((r: any) => ({
+        id: r.id,
+        restaurantName: r.restaurant_name,
+        contactName: r.contact_name,
+        email: r.email,
+        phone: r.phone ?? null,
+        city: r.city ?? null,
+        businessType: r.business_type ?? null,
+        createdAt: r.created_at,
+      })),
+    };
   }
 
   async getInvitationStatuses(token: string): Promise<Record<string, any>> {
@@ -782,6 +845,12 @@ export function useMainPortalApi() {
     getMainPortalStats: () =>
       makeAuthenticatedRequest((token) =>
         mainPortalApiService.getMainPortalStats(token),
+      ),
+
+    // Métodos de leads
+    getAllLeads: (params?: LeadsParams) =>
+      makeAuthenticatedRequest((token) =>
+        mainPortalApiService.getAllLeads(token, params),
       ),
     getInvitationStatuses: () =>
       makeAuthenticatedRequest((token) =>

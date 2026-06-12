@@ -13,6 +13,8 @@ import type {
   TransactionHistoryFilters,
   TransactionHistoryResponse,
 } from "../types/api";
+import type { LeadsParams, LeadsResponse } from "../services/mainPortalApi";
+import { useMainPortalApi } from "../services/mainPortalApi";
 import { useAuthenticatedApi } from "./useAuthenticatedApi";
 import { useSocket } from "./useSocket";
 
@@ -59,6 +61,7 @@ export const queryKeys = {
     "transactionHistory",
     filters,
   ],
+  leads: (params: LeadsParams) => ["leads", params],
 };
 
 // Hook para obtener todos los restaurantes
@@ -438,4 +441,15 @@ export const useRealtimeStats = (filters: SuperAdminFilters = {}) => {
   console.log("[useRealtimeStats] Returning:", returnValue);
 
   return returnValue;
+};
+
+export const useLeads = (params: LeadsParams = {}) => {
+  const api = useMainPortalApi();
+
+  return useQuery<LeadsResponse>({
+    queryKey: queryKeys.leads(params),
+    queryFn: () => api.getAllLeads(params),
+    staleTime: 2 * 60 * 1000,
+    retry: 2,
+  });
 };

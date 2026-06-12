@@ -9,6 +9,7 @@ import {
   Table2Icon,
   SettingsIcon,
   LogOutIcon,
+  UsersIcon,
 } from "lucide-react";
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
@@ -47,6 +48,11 @@ const Sidebar: React.FC = () => {
       path: "/admin",
       label: "Admin Manager",
       icon: <ListIcon className="h-5 w-5" />,
+    },
+    {
+      path: "/leads",
+      label: "Leads",
+      icon: <UsersIcon className="h-5 w-5" />,
     },
     {
       path: "/qr",
