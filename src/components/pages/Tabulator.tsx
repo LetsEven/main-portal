@@ -77,7 +77,7 @@ function Stepper({
   value,
   onChange,
   min = 0,
-  max = 100,
+  max = Infinity,
   step = 0.1,
   suffix = "%",
   decimals = 1,
@@ -312,20 +312,26 @@ const SUB: React.CSSProperties = {
 
 function TabSingle() {
   const LS_KEY = "xquisito_single";
-  const saved = (() => {
+  const [consumo, setConsumo] = useState<number>(500);
+  const [restPct, setRestPct] = useState<number>(2.0);
+  const [cliPct, setCliPct] = useState<number>(2.0);
+  const [provPct, setProvPct] = useState<number>(2.6);
+  const [provFixed, setProvFixed] = useState<number>(0.5);
+  const [propinaPct, setPropinaPct] = useState<number>(0.0);
+  const [iva, setIva] = useState<number>(16);
+
+  useEffect(() => {
     try {
-      return JSON.parse(localStorage.getItem(LS_KEY) || "{}") || {};
-    } catch {
-      return {};
-    }
-  })();
-  const [consumo, setConsumo] = useState<number>(saved.consumo ?? 500);
-  const [restPct, setRestPct] = useState<number>(saved.restPct ?? 2.0);
-  const [cliPct, setCliPct] = useState<number>(saved.cliPct ?? 2.0);
-  const [provPct, setProvPct] = useState<number>(saved.provPct ?? 2.6);
-  const [provFixed, setProvFixed] = useState<number>(saved.provFixed ?? 0.5);
-  const [propinaPct, setPropinaPct] = useState<number>(saved.propinaPct ?? 0.0);
-  const [iva, setIva] = useState<number>(saved.iva ?? 16);
+      const saved = JSON.parse(localStorage.getItem(LS_KEY) || "{}") || {};
+      if (saved.consumo !== undefined) setConsumo(saved.consumo);
+      if (saved.restPct !== undefined) setRestPct(saved.restPct);
+      if (saved.cliPct !== undefined) setCliPct(saved.cliPct);
+      if (saved.provPct !== undefined) setProvPct(saved.provPct);
+      if (saved.provFixed !== undefined) setProvFixed(saved.provFixed);
+      if (saved.propinaPct !== undefined) setPropinaPct(saved.propinaPct);
+      if (saved.iva !== undefined) setIva(saved.iva);
+    } catch {}
+  }, []);
 
   useEffect(() => {
     try {
@@ -957,7 +963,7 @@ function ScenarioCard({
           {field("# Mesas", "mesas", 1, 1, 500, 0)}
           {field("# Días abiertos", "dias", 1, 1, 31, 0)}
           {field("% Adopción", "adopcion", 5, 0, 100, 0)}
-          {field("# Sucursales", "rests", 1, 1, 500, 0)}
+          {field("# Sucursales", "rests", 1, 1, Infinity, 0)}
         </div>
       )}
 
@@ -1125,16 +1131,15 @@ function ScenarioCard({
 
 function TabScenarios() {
   const LS_KEY = "xquisito_scenarios";
-  const [scenarios, setScenarios] = useState<Scenario[]>(() => {
+  const [scenarios, setScenarios] = useState<Scenario[]>(DEFAULT_SCENARIOS);
+
+  useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(LS_KEY) || "null");
-      return saved && Array.isArray(saved) && saved.length > 0
-        ? saved
-        : DEFAULT_SCENARIOS;
-    } catch {
-      return DEFAULT_SCENARIOS;
-    }
-  });
+      if (saved && Array.isArray(saved) && saved.length > 0)
+        setScenarios(saved);
+    } catch {}
+  }, []);
 
   useEffect(() => {
     try {
@@ -1251,27 +1256,36 @@ function MiniBar({ label, value, max }: MiniBarProps) {
 
 function TabProjection() {
   const LS_KEY = "xquisito_projection";
-  const savedP = (() => {
+  const [ticket, setTicket] = useState<number>(500);
+  const [txMesa, setTxMesa] = useState<number>(4);
+  const [mesas, setMesas] = useState<number>(29);
+  const [dias, setDias] = useState<number>(31);
+  const [adopcion, setAdopcion] = useState<number>(100);
+  const [rests, setRests] = useState<number>(1);
+  const [propinaPct, setPropinaPct] = useState<number>(0.0);
+  const [restPct, setRestPct] = useState<number>(2.0);
+  const [cliPct, setCliPct] = useState<number>(2.0);
+  const [provPct, setProvPct] = useState<number>(2.6);
+  const [provFixed, setProvFixed] = useState<number>(0.5);
+  const [iva, setIva] = useState<number>(16);
+
+  useEffect(() => {
     try {
-      return JSON.parse(localStorage.getItem(LS_KEY) || "{}") || {};
-    } catch {
-      return {};
-    }
-  })();
-  const [ticket, setTicket] = useState<number>(savedP.ticket ?? 500);
-  const [txMesa, setTxMesa] = useState<number>(savedP.txMesa ?? 4);
-  const [mesas, setMesas] = useState<number>(savedP.mesas ?? 29);
-  const [dias, setDias] = useState<number>(savedP.dias ?? 31);
-  const [adopcion, setAdopcion] = useState<number>(savedP.adopcion ?? 100);
-  const [rests, setRests] = useState<number>(savedP.rests ?? 1);
-  const [propinaPct, setPropinaPct] = useState<number>(
-    savedP.propinaPct ?? 0.0,
-  );
-  const [restPct, setRestPct] = useState<number>(savedP.restPct ?? 2.0);
-  const [cliPct, setCliPct] = useState<number>(savedP.cliPct ?? 2.0);
-  const [provPct, setProvPct] = useState<number>(savedP.provPct ?? 2.6);
-  const [provFixed, setProvFixed] = useState<number>(savedP.provFixed ?? 0.5);
-  const [iva, setIva] = useState<number>(savedP.iva ?? 16);
+      const savedP = JSON.parse(localStorage.getItem(LS_KEY) || "{}") || {};
+      if (savedP.ticket !== undefined) setTicket(savedP.ticket);
+      if (savedP.txMesa !== undefined) setTxMesa(savedP.txMesa);
+      if (savedP.mesas !== undefined) setMesas(savedP.mesas);
+      if (savedP.dias !== undefined) setDias(savedP.dias);
+      if (savedP.adopcion !== undefined) setAdopcion(savedP.adopcion);
+      if (savedP.rests !== undefined) setRests(savedP.rests);
+      if (savedP.propinaPct !== undefined) setPropinaPct(savedP.propinaPct);
+      if (savedP.restPct !== undefined) setRestPct(savedP.restPct);
+      if (savedP.cliPct !== undefined) setCliPct(savedP.cliPct);
+      if (savedP.provPct !== undefined) setProvPct(savedP.provPct);
+      if (savedP.provFixed !== undefined) setProvFixed(savedP.provFixed);
+      if (savedP.iva !== undefined) setIva(savedP.iva);
+    } catch {}
+  }, []);
   const [volOpen, setVolOpen] = useState(true);
   const [comOpen, setComOpen] = useState(false);
 
@@ -1473,7 +1487,6 @@ function TabProjection() {
               value={rests}
               onChange={setRests}
               min={1}
-              max={500}
               step={1}
               suffix=""
               decimals={0}
