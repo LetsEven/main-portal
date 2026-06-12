@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Providers } from "./providers";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-mono",
+});
 
 export const metadata: Metadata = {
   title: "Portal de Super Administrador | Even",
@@ -31,7 +35,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="es">
-        <body className={inter.className}>
+        <body className={`${dmMono.className} ${dmMono.variable}`}>
           <Providers>{children}</Providers>
         </body>
       </html>
