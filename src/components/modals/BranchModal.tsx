@@ -363,7 +363,7 @@ const BranchModal: React.FC<BranchModalProps> = ({
         {isLoading && (
           <div className="absolute inset-0 bg-white bg-opacity-75 z-10 flex items-center justify-center rounded-lg">
             <div className="text-center">
-              <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-blue-600 mx-auto mb-2" />
+              <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-[#023828] mx-auto mb-2" />
               <p className="text-xs sm:text-sm text-gray-600 font-medium">
                 Guardando...
               </p>
@@ -595,7 +595,7 @@ const BranchModal: React.FC<BranchModalProps> = ({
                         type="button"
                         onClick={addRoomRange}
                         disabled={!newRangeStart || !newRangeEnd}
-                        className="px-2 sm:px-3 py-1.5 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                        className="px-2 sm:px-3 py-1.5 sm:py-2 bg-[#023828] text-[#82E657] hover:bg-[#034d38] disabled:opacity-40 disabled:cursor-not-allowed flex items-center transition-colors"
                       >
                         <Check className="h-3 w-3 sm:h-4 sm:w-4" />
                       </button>
@@ -653,11 +653,11 @@ const BranchModal: React.FC<BranchModalProps> = ({
         {formData.clientId && (
           <div className="space-y-3 sm:space-y-4">
             {/* Información básica del cliente */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
-              <h4 className="text-xs sm:text-sm font-medium text-blue-900 mb-1 sm:mb-2">
+            <div className="bg-[#C3FEFF]/20 border border-[#023828]/20 p-3 sm:p-4">
+              <h4 className="text-xs sm:text-sm font-medium text-[#023828] mb-1 sm:mb-2 uppercase tracking-widest">
                 Información del Cliente
               </h4>
-              <div className="text-xs sm:text-sm text-blue-700 space-y-0.5">
+              <div className="text-xs sm:text-sm text-[#023828] space-y-0.5">
                 <p>
                   <strong>Restaurante:</strong>{" "}
                   {getClientName(formData.clientId)}
@@ -698,8 +698,8 @@ const BranchModal: React.FC<BranchModalProps> = ({
                 return null;
 
               return (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
-                  <h4 className="text-xs sm:text-sm font-medium text-yellow-900 mb-2 sm:mb-3">
+                <div className="bg-[#C3FEFF]/20 border border-[#023828]/20 p-3 sm:p-4">
+                  <h4 className="text-xs sm:text-sm font-medium text-[#023828] mb-2 sm:mb-3 uppercase tracking-widest">
                     Control de Mesas
                   </h4>
 
@@ -734,14 +734,14 @@ const BranchModal: React.FC<BranchModalProps> = ({
                   {/* Desglose por sucursales existentes */}
                   {clientInfo.branches.length > 0 && (
                     <div>
-                      <h5 className="text-[10px] sm:text-xs font-medium text-yellow-800 mb-1 sm:mb-2">
+                      <h5 className="text-[10px] sm:text-xs font-medium text-[#023828]/60 mb-1 sm:mb-2 uppercase tracking-widest">
                         Sucursales Existentes:
                       </h5>
                       <div className="space-y-0.5 sm:space-y-1">
                         {clientInfo.branches.map((branch) => (
                           <div
                             key={branch.id}
-                            className="flex justify-between text-[10px] sm:text-xs text-yellow-700"
+                            className="flex justify-between text-[10px] sm:text-xs text-[#023828]/60"
                           >
                             <span>{branch.name}</span>
                             <span>{branch.tables} mesas</span>
@@ -765,18 +765,18 @@ const BranchModal: React.FC<BranchModalProps> = ({
         )}
 
         {/* Botones */}
-        <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:space-x-3 pt-4 sm:pt-6 border-t border-gray-200">
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:space-x-3 pt-4 sm:pt-6 border-t border-[#023828]/10">
           <button
             type="button"
             onClick={onClose}
-            className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
+            className="px-3 sm:px-4 py-2 border-2 border-[#023828]/30 text-[#023828] bg-white hover:bg-[#C3FEFF] focus:outline-none transition-colors text-sm uppercase tracking-widest"
             disabled={isLoading}
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm"
+            className="px-3 sm:px-4 py-2 bg-[#023828] text-[#82E657] hover:bg-[#034d38] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm uppercase tracking-widest transition-colors"
             disabled={isLoading}
           >
             {isLoading && (
