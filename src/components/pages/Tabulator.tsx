@@ -98,15 +98,22 @@ function Stepper({
 
   return (
     <div style={{ marginBottom: 12 }}>
-      <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 5 }}>
+      <div
+        style={{
+          fontSize: 11,
+          color: "rgba(2,56,40,0.5)",
+          marginBottom: 5,
+          textTransform: "uppercase",
+          letterSpacing: "0.6px",
+        }}
+      >
         {label}
       </div>
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          border: "1px solid #e5e7eb",
-          borderRadius: 8,
+          border: "2px solid rgba(2,56,40,0.15)",
           overflow: "hidden",
           background: "#fff",
         }}
@@ -117,11 +124,11 @@ function Stepper({
             width: 36,
             height: 36,
             border: "none",
-            borderRight: "1px solid #e5e7eb",
-            background: "#f9fafb",
+            borderRight: "2px solid rgba(2,56,40,0.15)",
+            background: "#fff",
             cursor: "pointer",
             fontSize: 18,
-            color: "#6b7280",
+            color: "#023828",
             lineHeight: 1,
           }}
         >
@@ -151,9 +158,9 @@ function Stepper({
               border: "none",
               outline: "none",
               textAlign: "center",
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: 600,
-              color: "#111",
+              color: "#023828",
               height: 36,
               background: "transparent",
               paddingRight: suffix ? 26 : 8,
@@ -164,8 +171,8 @@ function Stepper({
               style={{
                 position: "absolute",
                 right: 8,
-                fontSize: 12,
-                color: "#9ca3af",
+                fontSize: 11,
+                color: "rgba(2,56,40,0.4)",
                 pointerEvents: "none",
               }}
             >
@@ -179,11 +186,11 @@ function Stepper({
             width: 36,
             height: 36,
             border: "none",
-            borderLeft: "1px solid #e5e7eb",
-            background: "#f9fafb",
+            borderLeft: "2px solid rgba(2,56,40,0.15)",
+            background: "#fff",
             cursor: "pointer",
             fontSize: 18,
-            color: "#6b7280",
+            color: "#023828",
             lineHeight: 1,
           }}
         >
@@ -207,9 +214,9 @@ interface RowProps {
 function Row({ label, pct, value, bold, green, highlight, indent }: RowProps) {
   const bg =
     highlight === "yellow"
-      ? "#fef9c3"
+      ? "#FEFEEB"
       : highlight === "green"
-        ? "#f0fdfa"
+        ? "rgba(130,230,87,0.12)"
         : "transparent";
   return (
     <div
@@ -217,7 +224,6 @@ function Row({ label, pct, value, bold, green, highlight, indent }: RowProps) {
         display: "flex",
         alignItems: "center",
         padding: "6px 8px",
-        borderRadius: 6,
         background: bg,
         marginBottom: 1,
         paddingLeft: indent ? 22 : 8,
@@ -228,7 +234,7 @@ function Row({ label, pct, value, bold, green, highlight, indent }: RowProps) {
           flex: 1,
           fontSize: bold ? 13 : 12,
           fontWeight: bold ? 700 : 400,
-          color: bold ? (green ? "#0d9488" : "#1f2937") : "#6b7280",
+          color: bold ? (green ? "#299E66" : "#023828") : "rgba(2,56,40,0.5)",
         }}
       >
         {label}
@@ -237,7 +243,7 @@ function Row({ label, pct, value, bold, green, highlight, indent }: RowProps) {
         <span
           style={{
             fontSize: 11,
-            color: "#9ca3af",
+            color: "rgba(2,56,40,0.35)",
             minWidth: 44,
             textAlign: "right",
             marginRight: 12,
@@ -250,7 +256,7 @@ function Row({ label, pct, value, bold, green, highlight, indent }: RowProps) {
         style={{
           fontSize: bold ? 13 : 12,
           fontWeight: bold ? 700 : 500,
-          color: green ? "#0d9488" : "#1f2937",
+          color: green ? "#299E66" : "#023828",
           minWidth: 80,
           textAlign: "right",
         }}
@@ -269,27 +275,27 @@ interface MetricCardProps {
 
 function MetricCard({ label, value, color }: MetricCardProps) {
   const map: Record<string, [string, string]> = {
-    green: ["#f0fdfa", "#0d9488"],
-    blue: ["#eff6ff", "#1d4ed8"],
-    amber: ["#fffbeb", "#d97706"],
-    gray: ["#f9fafb", "#374151"],
+    green: ["rgba(130,230,87,0.15)", "#023828"],
+    blue: ["#C3FEFF", "#023828"],
+    amber: ["#FEFEEB", "#023828"],
+    gray: ["#FEFEEB", "#023828"],
   };
   const [bg, text] = map[color] || map.gray;
   return (
     <div
       style={{
         background: bg,
-        borderRadius: 12,
         padding: "14px 12px",
         textAlign: "center",
+        border: "1px solid rgba(2,56,40,0.1)",
       }}
     >
       <div
         style={{
           fontSize: 10,
-          color: "#9ca3af",
+          color: "rgba(2,56,40,0.5)",
           textTransform: "uppercase",
-          letterSpacing: "0.4px",
+          letterSpacing: "0.6px",
           marginBottom: 6,
         }}
       >
@@ -302,10 +308,10 @@ function MetricCard({ label, value, color }: MetricCardProps) {
 
 const SUB: React.CSSProperties = {
   fontSize: 10,
-  fontWeight: 700,
-  color: "#9ca3af",
+  fontWeight: 500,
+  color: "rgba(2,56,40,0.4)",
   textTransform: "uppercase",
-  letterSpacing: "0.6px",
+  letterSpacing: "0.8px",
   margin: "16px 0 8px",
   paddingLeft: 8,
 };
@@ -374,8 +380,7 @@ function TabSingle() {
       <div
         style={{
           background: "#fff",
-          border: "1px solid #e5e7eb",
-          borderRadius: 16,
+          border: "2px solid rgba(2,56,40,0.12)",
           padding: "1.25rem",
         }}
       >
@@ -489,8 +494,8 @@ function TabSingle() {
         <div
           style={{
             background: "#fff",
-            border: "1px solid #e5e7eb",
-            borderRadius: 16,
+            border: "1px solid rgba(2,56,40,0.12)",
+            borderRadius: 0,
             padding: "1.25rem",
           }}
         >
@@ -507,7 +512,7 @@ function TabSingle() {
                 flex: 1,
                 fontSize: 10,
                 fontWeight: 700,
-                color: "#9ca3af",
+                color: "rgba(2,56,40,0.35)",
                 textTransform: "uppercase",
                 letterSpacing: "0.6px",
               }}
@@ -518,7 +523,7 @@ function TabSingle() {
               style={{
                 fontSize: 10,
                 fontWeight: 700,
-                color: "#9ca3af",
+                color: "rgba(2,56,40,0.35)",
                 textTransform: "uppercase",
                 letterSpacing: "0.6px",
                 minWidth: 44,
@@ -532,7 +537,7 @@ function TabSingle() {
               style={{
                 fontSize: 10,
                 fontWeight: 700,
-                color: "#9ca3af",
+                color: "rgba(2,56,40,0.35)",
                 textTransform: "uppercase",
                 letterSpacing: "0.6px",
                 minWidth: 80,
@@ -724,12 +729,12 @@ function ScenarioCard({
         fontSize: 12,
       }}
     >
-      <span style={{ color: "#6b7280", minWidth: 118 }}>{label}</span>
+      <span style={{ color: "rgba(2,56,40,0.5)", minWidth: 118 }}>{label}</span>
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          border: "1px solid #e5e7eb",
+          border: "1px solid rgba(2,56,40,0.12)",
           borderRadius: 6,
           overflow: "hidden",
           flex: 1,
@@ -749,11 +754,11 @@ function ScenarioCard({
             width: 26,
             height: 28,
             border: "none",
-            borderRight: "1px solid #e5e7eb",
-            background: "#f9fafb",
+            borderRight: "1px solid rgba(2,56,40,0.12)",
+            background: "#fff",
             cursor: "pointer",
             fontSize: 14,
-            color: "#6b7280",
+            color: "rgba(2,56,40,0.5)",
           }}
         >
           −
@@ -774,7 +779,7 @@ function ScenarioCard({
             textAlign: "center",
             fontSize: 12,
             fontWeight: 600,
-            color: "#111",
+            color: "#023828",
             height: 28,
             background: "transparent",
           }}
@@ -793,11 +798,11 @@ function ScenarioCard({
             width: 26,
             height: 28,
             border: "none",
-            borderLeft: "1px solid #e5e7eb",
-            background: "#f9fafb",
+            borderLeft: "1px solid rgba(2,56,40,0.12)",
+            background: "#fff",
             cursor: "pointer",
             fontSize: 14,
-            color: "#6b7280",
+            color: "rgba(2,56,40,0.5)",
           }}
         >
           +
@@ -810,8 +815,8 @@ function ScenarioCard({
     <div
       style={{
         background: "#fff",
-        border: isBest ? "2px solid #0d9488" : "1px solid #e5e7eb",
-        borderRadius: 16,
+        border: isBest ? "2px solid #0d9488" : "1px solid rgba(2,56,40,0.12)",
+        borderRadius: 0,
         padding: "1.25rem",
         position: "relative",
       }}
@@ -853,7 +858,7 @@ function ScenarioCard({
             border: "none",
             outline: "none",
             background: "transparent",
-            color: "#111",
+            color: "#023828",
           }}
         />
         {canDelete && (
@@ -861,12 +866,12 @@ function ScenarioCard({
             onClick={() => onDelete(idx)}
             style={{
               background: "none",
-              border: "1px solid #e5e7eb",
+              border: "1px solid rgba(2,56,40,0.12)",
               borderRadius: 5,
               padding: "2px 7px",
               fontSize: 11,
               cursor: "pointer",
-              color: "#9ca3af",
+              color: "rgba(2,56,40,0.35)",
             }}
           >
             ✕
@@ -892,7 +897,7 @@ function ScenarioCard({
           <div
             key={l}
             style={{
-              background: "#f9fafb",
+              background: "#fff",
               borderRadius: 8,
               padding: "8px 6px",
               textAlign: "center",
@@ -901,7 +906,7 @@ function ScenarioCard({
             <div
               style={{
                 fontSize: 10,
-                color: "#9ca3af",
+                color: "rgba(2,56,40,0.35)",
                 textTransform: "uppercase",
                 letterSpacing: "0.3px",
                 marginBottom: 4,
@@ -909,7 +914,7 @@ function ScenarioCard({
             >
               {l}
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#1f2937" }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#023828" }}>
               {v}
             </div>
           </div>
@@ -923,8 +928,8 @@ function ScenarioCard({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "#f9fafb",
-          border: "1px solid #e5e7eb",
+          background: "#fff",
+          border: "1px solid rgba(2,56,40,0.12)",
           borderRadius: 8,
           padding: "7px 10px",
           cursor: "pointer",
@@ -936,7 +941,7 @@ function ScenarioCard({
           style={{
             fontSize: 10,
             fontWeight: 700,
-            color: "#9ca3af",
+            color: "rgba(2,56,40,0.35)",
             textTransform: "uppercase",
             letterSpacing: "0.5px",
           }}
@@ -946,7 +951,7 @@ function ScenarioCard({
         <span
           style={{
             fontSize: 14,
-            color: "#9ca3af",
+            color: "rgba(2,56,40,0.35)",
             display: "inline-block",
             transition: "transform 0.2s",
             transform: volOpen ? "rotate(180deg)" : "rotate(0deg)",
@@ -974,8 +979,8 @@ function ScenarioCard({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "#f9fafb",
-          border: "1px solid #e5e7eb",
+          background: "#fff",
+          border: "1px solid rgba(2,56,40,0.12)",
           borderRadius: 8,
           padding: "7px 10px",
           cursor: "pointer",
@@ -987,7 +992,7 @@ function ScenarioCard({
           style={{
             fontSize: 10,
             fontWeight: 700,
-            color: "#9ca3af",
+            color: "rgba(2,56,40,0.35)",
             textTransform: "uppercase",
             letterSpacing: "0.5px",
           }}
@@ -997,7 +1002,7 @@ function ScenarioCard({
         <span
           style={{
             fontSize: 14,
-            color: "#9ca3af",
+            color: "rgba(2,56,40,0.35)",
             transition: "transform 0.2s",
             display: "inline-block",
             transform: comOpen ? "rotate(180deg)" : "rotate(0deg)",
@@ -1030,7 +1035,7 @@ function ScenarioCard({
             style={{
               fontSize: 10,
               fontWeight: 700,
-              color: "#9ca3af",
+              color: "rgba(2,56,40,0.35)",
               textTransform: "uppercase",
               letterSpacing: "0.4px",
             }}
@@ -1041,7 +1046,7 @@ function ScenarioCard({
             style={{
               fontSize: 10,
               fontWeight: 700,
-              color: "#9ca3af",
+              color: "rgba(2,56,40,0.35)",
               textTransform: "uppercase",
               letterSpacing: "0.4px",
               textAlign: "right",
@@ -1053,7 +1058,7 @@ function ScenarioCard({
             style={{
               fontSize: 10,
               fontWeight: 700,
-              color: "#9ca3af",
+              color: "rgba(2,56,40,0.35)",
               textTransform: "uppercase",
               letterSpacing: "0.4px",
               textAlign: "right",
@@ -1101,7 +1106,9 @@ function ScenarioCard({
               borderBottom: "1px solid #f9f9f9",
             }}
           >
-            <span style={{ fontSize: 12, color: "#6b7280" }}>{l}</span>
+            <span style={{ fontSize: 12, color: "rgba(2,56,40,0.5)" }}>
+              {l}
+            </span>
             <span
               style={{
                 fontSize: 12,
@@ -1203,11 +1210,11 @@ function TabScenarios() {
           style={{
             background: "none",
             border: "2px dashed #e5e7eb",
-            borderRadius: 16,
+            borderRadius: 0,
             padding: "2rem 1rem",
             fontSize: 13,
             cursor: "pointer",
-            color: "#9ca3af",
+            color: "rgba(2,56,40,0.35)",
             minHeight: 140,
           }}
         >
@@ -1236,8 +1243,8 @@ function MiniBar({ label, value, max }: MiniBarProps) {
           marginBottom: 3,
         }}
       >
-        <span style={{ color: "#6b7280" }}>{label}</span>
-        <span style={{ fontWeight: 700, color: "#0d9488" }}>{fmt(value)}</span>
+        <span style={{ color: "rgba(2,56,40,0.5)" }}>{label}</span>
+        <span style={{ fontWeight: 700, color: "#299E66" }}>{fmt(value)}</span>
       </div>
       <div style={{ background: "#f0f0f0", borderRadius: 4, height: 6 }}>
         <div
@@ -1358,8 +1365,8 @@ function TabProjection() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        background: "#f9fafb",
-        border: "1px solid #e5e7eb",
+        background: "#fff",
+        border: "1px solid rgba(2,56,40,0.12)",
         borderRadius: 8,
         padding: "7px 10px",
         cursor: "pointer",
@@ -1370,7 +1377,7 @@ function TabProjection() {
         style={{
           fontSize: 10,
           fontWeight: 700,
-          color: "#9ca3af",
+          color: "rgba(2,56,40,0.35)",
           textTransform: "uppercase",
           letterSpacing: "0.5px",
         }}
@@ -1380,7 +1387,7 @@ function TabProjection() {
       <span
         style={{
           fontSize: 14,
-          color: "#9ca3af",
+          color: "rgba(2,56,40,0.35)",
           display: "inline-block",
           transition: "transform 0.2s",
           transform: open ? "rotate(180deg)" : "rotate(0deg)",
@@ -1410,8 +1417,7 @@ function TabProjection() {
       <div
         style={{
           background: "#fff",
-          border: "1px solid #e5e7eb",
-          borderRadius: 16,
+          border: "2px solid rgba(2,56,40,0.12)",
           padding: "1.25rem",
         }}
       >
@@ -1578,7 +1584,7 @@ function TabProjection() {
               key={l}
               style={{
                 background: "#fff",
-                border: "1px solid #e5e7eb",
+                border: "1px solid rgba(2,56,40,0.12)",
                 borderRadius: 10,
                 padding: "10px 8px",
                 textAlign: "center",
@@ -1587,7 +1593,7 @@ function TabProjection() {
               <div
                 style={{
                   fontSize: 10,
-                  color: "#9ca3af",
+                  color: "rgba(2,56,40,0.35)",
                   textTransform: "uppercase",
                   letterSpacing: "0.3px",
                   marginBottom: 4,
@@ -1595,7 +1601,7 @@ function TabProjection() {
               >
                 {l}
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: "#1f2937" }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: "#023828" }}>
                 {v}
               </div>
             </div>
@@ -1628,8 +1634,8 @@ function TabProjection() {
         <div
           style={{
             background: "#fff",
-            border: "1px solid #e5e7eb",
-            borderRadius: 16,
+            border: "1px solid rgba(2,56,40,0.12)",
+            borderRadius: 0,
             padding: "1.25rem",
             marginBottom: 14,
           }}
@@ -1646,7 +1652,7 @@ function TabProjection() {
               style={{
                 fontSize: 10,
                 fontWeight: 700,
-                color: "#9ca3af",
+                color: "rgba(2,56,40,0.35)",
                 textTransform: "uppercase",
                 letterSpacing: "0.4px",
               }}
@@ -1657,7 +1663,7 @@ function TabProjection() {
               style={{
                 fontSize: 10,
                 fontWeight: 700,
-                color: "#9ca3af",
+                color: "rgba(2,56,40,0.35)",
                 textTransform: "uppercase",
                 letterSpacing: "0.4px",
                 textAlign: "right",
@@ -1669,7 +1675,7 @@ function TabProjection() {
               style={{
                 fontSize: 10,
                 fontWeight: 700,
-                color: "#9ca3af",
+                color: "rgba(2,56,40,0.35)",
                 textTransform: "uppercase",
                 letterSpacing: "0.4px",
                 textAlign: "right",
@@ -1712,7 +1718,9 @@ function TabProjection() {
                 borderBottom: "1px solid #f0f0f0",
               }}
             >
-              <span style={{ fontSize: 12, color: "#6b7280" }}>{l}</span>
+              <span style={{ fontSize: 12, color: "rgba(2,56,40,0.5)" }}>
+                {l}
+              </span>
               <span
                 style={{
                   fontSize: 12,
@@ -1740,8 +1748,8 @@ function TabProjection() {
         <div
           style={{
             background: "#fff",
-            border: "1px solid #e5e7eb",
-            borderRadius: 16,
+            border: "1px solid rgba(2,56,40,0.12)",
+            borderRadius: 0,
             padding: "1.25rem",
           }}
         >
@@ -1781,8 +1789,8 @@ export default function Calculator() {
   return (
     <div
       style={{
-        fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",
-        background: "#f9fafb",
+        fontFamily: "inherit",
+        background: "#fff",
         minHeight: "100%",
       }}
     >
@@ -1798,7 +1806,7 @@ export default function Calculator() {
       <div
         style={{
           background: "#fff",
-          borderBottom: "1px solid #e5e7eb",
+          borderBottom: "2px solid rgba(2,56,40,0.1)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -1813,12 +1821,11 @@ export default function Calculator() {
         <div
           style={{
             display: "flex",
-            gap: 4,
-            background: "#f3f4f6",
-            borderRadius: 10,
-            padding: 3,
+            gap: 0,
+            border: "2px solid rgba(2,56,40,0.15)",
             flex: 1,
             maxWidth: 420,
+            overflow: "hidden",
           }}
         >
           {TABS.map((t) => (
@@ -1827,17 +1834,17 @@ export default function Calculator() {
               onClick={() => setTab(t.id)}
               style={{
                 flex: 1,
-                padding: "6px 4px",
-                fontSize: 12,
+                padding: "8px 4px",
+                fontSize: 11,
                 border: "none",
-                borderRadius: 8,
+                borderRight: "1px solid rgba(2,56,40,0.15)",
                 cursor: "pointer",
-                background: tab === t.id ? "#fff" : "transparent",
-                color: tab === t.id ? "#111" : "#6b7280",
+                background: tab === t.id ? "#023828" : "#FEFEEB",
+                color: tab === t.id ? "#82E657" : "rgba(2,56,40,0.5)",
                 fontWeight: tab === t.id ? 600 : 400,
-                boxShadow: tab === t.id ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
                 transition: "all 0.15s",
-                fontFamily: "inherit",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
                 whiteSpace: "nowrap",
               }}
             >
@@ -1848,11 +1855,10 @@ export default function Calculator() {
         <button
           onClick={handleReset}
           style={{
-            fontSize: 20,
-            color: "#9ca3af",
-            background: "none",
-            border: "1px solid #e5e7eb",
-            borderRadius: 8,
+            fontSize: 18,
+            color: "rgba(2,56,40,0.4)",
+            background: "#fff",
+            border: "2px solid rgba(2,56,40,0.15)",
             cursor: "pointer",
             flexShrink: 0,
             width: 36,

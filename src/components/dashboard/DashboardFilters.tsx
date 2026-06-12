@@ -251,7 +251,7 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
     let updatedRestaurants;
     if (filters.restaurantIds.includes(restaurantId)) {
       updatedRestaurants = filters.restaurantIds.filter(
-        (id) => id !== restaurantId
+        (id) => id !== restaurantId,
       );
     } else {
       updatedRestaurants = [...filters.restaurantIds, restaurantId];
@@ -453,58 +453,70 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
     isAgeRangeActive,
   ].filter(Boolean).length;
 
+  // Clases reutilizables
+  const btnBase =
+    "flex items-center px-3 py-1.5 text-xs uppercase tracking-widest w-full sm:w-auto justify-between sm:justify-start transition-colors";
+  const btnInactive = "bg-[#FEFEEB] hover:bg-[#C3FEFF] text-[#023828]";
+  const btnActive =
+    "bg-[#82E657]/20 border border-[#023828] text-[#023828] hover:bg-[#82E657]/30";
+  const dropdownPanel =
+    "absolute left-0 right-0 sm:right-auto mt-1 bg-white border-2 border-[#023828]/20 p-2 z-20 w-full shadow-sm";
+  const dropdownItem =
+    "px-2 py-1.5 hover:bg-[#C3FEFF] cursor-pointer text-xs uppercase tracking-widest text-[#023828] transition-colors";
+  const dropdownItemActive = "bg-[#82E657]/20 text-[#023828]";
+
   return (
-    <div className="bg-white rounded-lg shadow-sm p-3 mb-6 sticky top-0 z-10">
+    <div className="bg-white border-b border-[#023828]/10 p-3 mb-6 sticky top-0 z-10">
       {/* Botón de filtros para móvil */}
       <div className="md:hidden flex items-center justify-between mb-2">
         <button
-          className="flex items-center px-3 py-2 rounded-md text-sm bg-gray-50 hover:bg-gray-100 text-gray-700 w-full justify-between"
+          className="flex items-center px-3 py-2 text-xs uppercase tracking-widest bg-[#FEFEEB] hover:bg-[#C3FEFF] text-[#023828] w-full justify-between transition-colors"
           onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
         >
           <span className="flex items-center">
-            <FilterIcon className="w-4 h-4 mr-2 text-gray-500" />
+            <FilterIcon className="w-4 h-4 mr-2 text-[#023828]/50" />
             Filtros
             {activeFiltersCount > 0 && (
-              <span className="ml-2 bg-teal-500 text-white text-xs px-2 py-0.5 rounded-full">
+              <span className="ml-2 bg-[#82E657] text-[#023828] text-xs px-2 py-0.5">
                 {activeFiltersCount}
               </span>
             )}
           </span>
           {isMobileFiltersOpen ? (
-            <ChevronUpIcon className="w-4 h-4 text-gray-500" />
+            <ChevronUpIcon className="w-4 h-4 text-[#023828]/50" />
           ) : (
-            <ChevronDownIcon className="w-4 h-4 text-gray-500" />
+            <ChevronDownIcon className="w-4 h-4 text-[#023828]/50" />
           )}
         </button>
       </div>
 
       {/* Contenedor de filtros - visible en desktop, colapsable en móvil */}
-      <div className={`${isMobileFiltersOpen ? "flex" : "hidden"} md:flex flex-wrap items-center gap-2`}>
+      <div
+        className={`${isMobileFiltersOpen ? "flex" : "hidden"} md:flex flex-wrap items-center gap-2`}
+      >
         {/* Filtro de Rango de Fechas */}
         <div className="relative w-full sm:w-auto" ref={datePickerRef}>
           <button
-            className={`flex items-center px-3 py-1.5 rounded-md text-sm w-full sm:w-auto justify-between sm:justify-start ${isDateActive ? "bg-teal-100 border border-teal-300 text-teal-700 hover:bg-teal-200" : "bg-gray-50 hover:bg-gray-100 text-gray-700"}`}
+            className={`${btnBase} ${isDateActive ? btnActive : btnInactive}`}
             onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
           >
             <span className="flex items-center">
-              <CalendarIcon
-                className={`w-4 h-4 mr-1.5 ${isDateActive ? "text-teal-500" : "text-gray-500"}`}
-              />
+              <CalendarIcon className="w-3.5 h-3.5 mr-1.5 text-[#023828]/50" />
               <span className="whitespace-nowrap">{formatDateRange()}</span>
             </span>
           </button>
           {isDatePickerOpen && (
-            <div className="absolute left-0 right-0 sm:right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-20 w-full sm:w-72">
+            <div className={`${dropdownPanel} sm:w-72`}>
               <div className="grid grid-cols-2 gap-2 mb-3">
                 <div>
-                  <label className="text-xs text-gray-600 block mb-1 font-medium">
-                    Fecha Inicio
+                  <label className="text-xs uppercase tracking-widest text-[#023828]/50 block mb-1">
+                    Inicio
                   </label>
                   <input
                     type="date"
                     required
                     max={new Date().toISOString().split("T")[0]}
-                    className="w-full text-sm p-1.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full text-xs p-1.5 border-2 border-[#023828]/20 bg-white text-[#023828] focus:outline-none focus:border-[#023828]"
                     value={dateToInputValue(tempDateRange.startDate)}
                     onChange={(e) =>
                       handleDateChange({
@@ -515,8 +527,8 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-600 block mb-1 font-medium">
-                    Fecha Fin
+                  <label className="text-xs uppercase tracking-widest text-[#023828]/50 block mb-1">
+                    Fin
                   </label>
                   <input
                     type="date"
@@ -527,7 +539,7 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
                         ? dateToInputValue(tempDateRange.startDate)
                         : undefined
                     }
-                    className="w-full text-sm p-1.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full text-xs p-1.5 border-2 border-[#023828]/20 bg-white text-[#023828] focus:outline-none focus:border-[#023828]"
                     value={dateToInputValue(tempDateRange.endDate)}
                     onChange={(e) =>
                       handleDateChange({
@@ -539,133 +551,119 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
                 </div>
               </div>
 
-              {/* Botones de acceso rápido */}
-              <div className="mb-3 pt-2 border-t border-gray-200">
-                <label className="text-xs text-gray-600 block mb-2 font-medium">
+              {/* Accesos rápidos */}
+              <div className="mb-3 pt-2 border-t border-[#023828]/10">
+                <label className="text-xs uppercase tracking-widest text-[#023828]/50 block mb-2">
                   Accesos rápidos
                 </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => {
-                      const newFilters = {
-                        ...filters,
-                        dateRange: { startDate: null, endDate: null },
-                      };
-                      setFilters(newFilters);
-                      onFilterChange(newFilters);
-                      setIsDatePickerOpen(false);
-                    }}
-                    className={`px-2 py-1.5 text-xs rounded transition-colors ${
-                      getActiveQuickAccess() === "allTime"
-                        ? "bg-teal-100 border border-teal-300 text-teal-700 font-medium"
-                        : "text-gray-700 bg-gray-50 hover:bg-gray-100"
-                    }`}
-                  >
-                    Todo el tiempo
-                  </button>
-                  <button
-                    onClick={() => {
-                      const endDate = new Date();
-                      const startDate = new Date();
-                      startDate.setDate(startDate.getDate() - 7);
-                      const newFilters = {
-                        ...filters,
-                        dateRange: { startDate, endDate },
-                      };
-                      setFilters(newFilters);
-                      onFilterChange(newFilters);
-                      setIsDatePickerOpen(false);
-                    }}
-                    className={`px-2 py-1.5 text-xs rounded transition-colors ${
-                      getActiveQuickAccess() === "last7days"
-                        ? "bg-teal-100 border border-teal-300 text-teal-700 font-medium"
-                        : "text-gray-700 bg-gray-50 hover:bg-gray-100"
-                    }`}
-                  >
-                    Últimos 7 días
-                  </button>
-                  <button
-                    onClick={() => {
-                      const endDate = new Date();
-                      const startDate = new Date();
-                      startDate.setDate(startDate.getDate() - 30);
-                      const newFilters = {
-                        ...filters,
-                        dateRange: { startDate, endDate },
-                      };
-                      setFilters(newFilters);
-                      onFilterChange(newFilters);
-                      setIsDatePickerOpen(false);
-                    }}
-                    className={`px-2 py-1.5 text-xs rounded transition-colors ${
-                      getActiveQuickAccess() === "last30days"
-                        ? "bg-teal-100 border border-teal-300 text-teal-700 font-medium"
-                        : "text-gray-700 bg-gray-50 hover:bg-gray-100"
-                    }`}
-                  >
-                    Últimos 30 días
-                  </button>
-                  <button
-                    onClick={() => {
-                      const endDate = new Date();
-                      const startDate = new Date();
-                      startDate.setDate(startDate.getDate() - 90);
-                      const newFilters = {
-                        ...filters,
-                        dateRange: { startDate, endDate },
-                      };
-                      setFilters(newFilters);
-                      onFilterChange(newFilters);
-                      setIsDatePickerOpen(false);
-                    }}
-                    className={`px-2 py-1.5 text-xs rounded transition-colors ${
-                      getActiveQuickAccess() === "last90days"
-                        ? "bg-teal-100 border border-teal-300 text-teal-700 font-medium"
-                        : "text-gray-700 bg-gray-50 hover:bg-gray-100"
-                    }`}
-                  >
-                    Últimos 90 días
-                  </button>
-                  <button
-                    onClick={() => {
-                      const endDate = new Date();
-                      const startDate = new Date();
-                      startDate.setMonth(startDate.getMonth() - 12);
-                      const newFilters = {
-                        ...filters,
-                        dateRange: { startDate, endDate },
-                      };
-                      setFilters(newFilters);
-                      onFilterChange(newFilters);
-                      setIsDatePickerOpen(false);
-                    }}
-                    className={`px-2 py-1.5 text-xs rounded transition-colors ${
-                      getActiveQuickAccess() === "lastYear"
-                        ? "bg-teal-100 border border-teal-300 text-teal-700 font-medium"
-                        : "text-gray-700 bg-gray-50 hover:bg-gray-100"
-                    }`}
-                  >
-                    Último año
-                  </button>
+                <div className="grid grid-cols-2 gap-1">
+                  {[
+                    {
+                      key: "allTime",
+                      label: "Todo el tiempo",
+                      onClick: () => {
+                        const nf = {
+                          ...filters,
+                          dateRange: { startDate: null, endDate: null },
+                        };
+                        setFilters(nf);
+                        onFilterChange(nf);
+                        setIsDatePickerOpen(false);
+                      },
+                    },
+                    {
+                      key: "last7days",
+                      label: "7 días",
+                      onClick: () => {
+                        const e = new Date();
+                        const s = new Date();
+                        s.setDate(s.getDate() - 7);
+                        const nf = {
+                          ...filters,
+                          dateRange: { startDate: s, endDate: e },
+                        };
+                        setFilters(nf);
+                        onFilterChange(nf);
+                        setIsDatePickerOpen(false);
+                      },
+                    },
+                    {
+                      key: "last30days",
+                      label: "30 días",
+                      onClick: () => {
+                        const e = new Date();
+                        const s = new Date();
+                        s.setDate(s.getDate() - 30);
+                        const nf = {
+                          ...filters,
+                          dateRange: { startDate: s, endDate: e },
+                        };
+                        setFilters(nf);
+                        onFilterChange(nf);
+                        setIsDatePickerOpen(false);
+                      },
+                    },
+                    {
+                      key: "last90days",
+                      label: "90 días",
+                      onClick: () => {
+                        const e = new Date();
+                        const s = new Date();
+                        s.setDate(s.getDate() - 90);
+                        const nf = {
+                          ...filters,
+                          dateRange: { startDate: s, endDate: e },
+                        };
+                        setFilters(nf);
+                        onFilterChange(nf);
+                        setIsDatePickerOpen(false);
+                      },
+                    },
+                    {
+                      key: "lastYear",
+                      label: "1 año",
+                      onClick: () => {
+                        const e = new Date();
+                        const s = new Date();
+                        s.setMonth(s.getMonth() - 12);
+                        const nf = {
+                          ...filters,
+                          dateRange: { startDate: s, endDate: e },
+                        };
+                        setFilters(nf);
+                        onFilterChange(nf);
+                        setIsDatePickerOpen(false);
+                      },
+                    },
+                  ].map(({ key, label, onClick }) => (
+                    <button
+                      key={key}
+                      onClick={onClick}
+                      className={`px-2 py-1.5 text-xs uppercase tracking-widest transition-colors ${
+                        getActiveQuickAccess() === key
+                          ? "bg-[#82E657]/20 border border-[#023828] text-[#023828] font-medium"
+                          : "text-[#023828]/60 bg-[#FEFEEB] hover:bg-[#C3FEFF]"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-gray-200">
-                {/* Botón de limpiar fechas */}
+              <div className="space-y-2 pt-2 border-t border-[#023828]/10">
                 {(filters.dateRange.startDate || filters.dateRange.endDate) && (
                   <button
                     onClick={clearDateFilter}
-                    className="w-full px-3 py-1.5 text-sm text-red-600 bg-red-50 hover:bg-red-100 rounded transition-colors"
+                    className="w-full px-3 py-1.5 text-xs uppercase tracking-widest text-red-500 bg-red-50 hover:bg-red-100 transition-colors"
                   >
                     Limpiar fechas
                   </button>
                 )}
-
-                {/* Botones de acción */}
                 <div className="flex gap-2">
                   <button
                     onClick={cancelDateFilter}
-                    className="flex-1 px-3 py-1.5 text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition-colors"
+                    className="flex-1 px-3 py-1.5 text-xs uppercase tracking-widest text-[#023828] bg-[#FEFEEB] hover:bg-[#C3FEFF] transition-colors"
                   >
                     Cancelar
                   </button>
@@ -674,7 +672,7 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
                     disabled={
                       !tempDateRange.startDate || !tempDateRange.endDate
                     }
-                    className="flex-1 px-3 py-1.5 text-sm text-white bg-teal-600 hover:bg-teal-700 rounded transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    className="flex-1 px-3 py-1.5 text-xs uppercase tracking-widest bg-[#023828] text-[#82E657] hover:bg-[#034d38] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Aplicar
                   </button>
@@ -687,34 +685,33 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
         {/* Filtro de Restaurante */}
         <div className="relative w-full sm:w-auto" ref={restaurantRef}>
           <button
-            className={`flex items-center px-3 py-1.5 rounded-md text-sm w-full sm:w-auto justify-between sm:justify-start ${isRestaurantActive ? "bg-teal-100 border border-teal-300 text-teal-700 hover:bg-teal-200" : "bg-gray-50 hover:bg-gray-100 text-gray-700"}`}
+            className={`${btnBase} ${isRestaurantActive ? btnActive : btnInactive}`}
             onClick={() => setIsRestaurantOpen(!isRestaurantOpen)}
           >
             <span className="flex items-center">
-              <UserIcon
-                className={`w-4 h-4 mr-1.5 ${isRestaurantActive ? "text-teal-500" : "text-gray-500"}`}
-              />
+              <UserIcon className="w-3.5 h-3.5 mr-1.5 text-[#023828]/50" />
               <span className="whitespace-nowrap">{formatRestaurants()}</span>
             </span>
           </button>
           {isRestaurantOpen && (
-            <div className="absolute left-0 right-0 sm:right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-20 w-full sm:w-64">
+            <div className={`${dropdownPanel} sm:w-64`}>
               <div
-                className="flex items-center px-2 py-1.5 hover:bg-gray-100 rounded cursor-pointer border-b border-gray-200 mb-1"
+                className={`${dropdownItem} border-b border-[#023828]/10 mb-1`}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleSelectAllRestaurants();
                 }}
               >
-                <input
-                  type="checkbox"
-                  id="restaurant-all"
-                  checked={filters.restaurantIds.length === restaurants.length}
-                  className="mr-2 pointer-events-none"
-                  readOnly
-                />
-                <span className="text-sm flex-1 font-medium">
+                <span className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={
+                      filters.restaurantIds.length === restaurants.length
+                    }
+                    className="pointer-events-none"
+                    readOnly
+                  />
                   Todos los Restaurantes
                 </span>
               </div>
@@ -722,21 +719,22 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
                 {restaurants.map((restaurant) => (
                   <div
                     key={restaurant.id}
-                    className="flex items-center px-2 py-1.5 hover:bg-gray-100 rounded cursor-pointer"
+                    className={dropdownItem}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       handleRestaurantToggle(restaurant.id);
                     }}
                   >
-                    <input
-                      type="checkbox"
-                      id={`restaurant-${restaurant.id}`}
-                      checked={filters.restaurantIds.includes(restaurant.id)}
-                      className="mr-2 pointer-events-none"
-                      readOnly
-                    />
-                    <span className="text-sm flex-1">{restaurant.name}</span>
+                    <span className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={filters.restaurantIds.includes(restaurant.id)}
+                        className="pointer-events-none"
+                        readOnly
+                      />
+                      {restaurant.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -747,55 +745,53 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
         {/* Filtro de Servicio */}
         <div className="relative w-full sm:w-auto" ref={servicesRef}>
           <button
-            className={`flex items-center px-3 py-1.5 rounded-md text-sm w-full sm:w-auto justify-between sm:justify-start ${isServiceActive ? "bg-teal-100 border border-teal-300 text-teal-700 hover:bg-teal-200" : "bg-gray-50 hover:bg-gray-100 text-gray-700"}`}
+            className={`${btnBase} ${isServiceActive ? btnActive : btnInactive}`}
             onClick={() => setIsServicesOpen(!isServicesOpen)}
           >
             <span className="flex items-center">
-              <LayersIcon
-                className={`w-4 h-4 mr-1.5 ${isServiceActive ? "text-teal-500" : "text-gray-500"}`}
-              />
+              <LayersIcon className="w-3.5 h-3.5 mr-1.5 text-[#023828]/50" />
               <span className="whitespace-nowrap">{formatServices()}</span>
             </span>
           </button>
           {isServicesOpen && (
-            <div className="absolute left-0 right-0 sm:right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-20 w-full sm:w-64">
+            <div className={`${dropdownPanel} sm:w-64`}>
               <div
-                className="flex items-center px-2 py-1.5 hover:bg-gray-100 rounded cursor-pointer border-b border-gray-200 mb-1"
+                className={`${dropdownItem} border-b border-[#023828]/10 mb-1`}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleSelectAllServices();
                 }}
               >
-                <input
-                  type="checkbox"
-                  id="service-all"
-                  checked={filters.services.length === serviceOptions.length}
-                  className="mr-2 pointer-events-none"
-                  readOnly
-                />
-                <span className="text-sm flex-1 font-medium">
+                <span className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={filters.services.length === serviceOptions.length}
+                    className="pointer-events-none"
+                    readOnly
+                  />
                   Todos los servicios
                 </span>
               </div>
               {serviceOptions.map((service) => (
                 <div
                   key={service}
-                  className="flex items-center px-2 py-1.5 hover:bg-gray-100 rounded cursor-pointer"
+                  className={dropdownItem}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     handleServiceToggle(service);
                   }}
                 >
-                  <input
-                    type="checkbox"
-                    id={`service-${service}`}
-                    checked={filters.services.includes(service)}
-                    className="mr-2 pointer-events-none"
-                    readOnly
-                  />
-                  <span className="text-sm flex-1">{service}</span>
+                  <span className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.services.includes(service)}
+                      className="pointer-events-none"
+                      readOnly
+                    />
+                    {service}
+                  </span>
                 </div>
               ))}
             </div>
@@ -805,22 +801,20 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
         {/* Filtro de Género */}
         <div className="relative w-full sm:w-auto" ref={genderRef}>
           <button
-            className={`flex items-center px-3 py-1.5 rounded-md text-sm w-full sm:w-auto justify-between sm:justify-start ${isGenderActive ? "bg-teal-100 border border-teal-300 text-teal-700 hover:bg-teal-200" : "bg-gray-50 hover:bg-gray-100 text-gray-700"}`}
+            className={`${btnBase} ${isGenderActive ? btnActive : btnInactive}`}
             onClick={() => setIsGenderOpen(!isGenderOpen)}
           >
             <span className="flex items-center">
-              <UsersIcon
-                className={`w-4 h-4 mr-1.5 ${isGenderActive ? "text-teal-500" : "text-gray-500"}`}
-              />
+              <UsersIcon className="w-3.5 h-3.5 mr-1.5 text-[#023828]/50" />
               <span className="whitespace-nowrap">
                 {filters.gender || "Todos los Diners"}
               </span>
             </span>
           </button>
           {isGenderOpen && (
-            <div className="absolute left-0 right-0 sm:right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-20 w-full sm:w-48">
+            <div className={`${dropdownPanel} sm:w-48`}>
               <div
-                className="px-2 py-1.5 hover:bg-gray-100 rounded cursor-pointer text-sm"
+                className={dropdownItem}
                 onClick={() => handleGenderChange("")}
               >
                 Todos los Diners
@@ -828,7 +822,7 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
               {genderOptions.map((gender) => (
                 <div
                   key={gender}
-                  className={`px-2 py-1.5 hover:bg-gray-100 rounded cursor-pointer text-sm ${filters.gender === gender ? "bg-teal-50 text-teal-700" : ""}`}
+                  className={`${dropdownItem} ${filters.gender === gender ? dropdownItemActive : ""}`}
                   onClick={() => handleGenderChange(gender)}
                 >
                   {gender}
@@ -841,22 +835,20 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
         {/* Filtro de Rango de Edad */}
         <div className="relative w-full sm:w-auto" ref={ageRangeRef}>
           <button
-            className={`flex items-center px-3 py-1.5 rounded-md text-sm w-full sm:w-auto justify-between sm:justify-start ${isAgeRangeActive ? "bg-teal-100 border border-teal-300 text-teal-700 hover:bg-teal-200" : "bg-gray-50 hover:bg-gray-100 text-gray-700"}`}
+            className={`${btnBase} ${isAgeRangeActive ? btnActive : btnInactive}`}
             onClick={() => setIsAgeRangeOpen(!isAgeRangeOpen)}
           >
             <span className="flex items-center">
-              <FilterIcon
-                className={`w-4 h-4 mr-1.5 ${isAgeRangeActive ? "text-teal-500" : "text-gray-500"}`}
-              />
+              <FilterIcon className="w-3.5 h-3.5 mr-1.5 text-[#023828]/50" />
               <span className="whitespace-nowrap">{formatAgeRange()}</span>
             </span>
           </button>
           {isAgeRangeOpen && (
-            <div className="absolute left-0 right-0 sm:right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-20 w-full sm:w-48">
+            <div className={`${dropdownPanel} sm:w-48`}>
               {ageRangeOptions.map((range) => (
                 <div
                   key={range.label}
-                  className={`px-2 py-1.5 hover:bg-gray-100 rounded cursor-pointer text-sm ${filters.ageRange.min === range.min && filters.ageRange.max === range.max ? "bg-teal-50 text-teal-700" : ""}`}
+                  className={`${dropdownItem} ${filters.ageRange.min === range.min && filters.ageRange.max === range.max ? dropdownItemActive : ""}`}
                   onClick={() => handleAgeRangeChange(range.min, range.max)}
                 >
                   {range.label}
@@ -868,11 +860,11 @@ const DashboardFiltersComponent: React.FC<FilterProps> = ({
 
         {/* Limpiar Filtros */}
         <button
-          className="w-full sm:w-auto sm:ml-auto flex items-center justify-center text-gray-600 hover:text-red-600 px-3 py-1.5 rounded-md text-sm mt-2 sm:mt-0 border border-gray-200 sm:border-0"
+          className="w-full sm:w-auto sm:ml-auto flex items-center justify-center text-[#023828]/40 hover:text-red-500 px-3 py-1.5 text-xs uppercase tracking-widest mt-2 sm:mt-0 transition-colors"
           onClick={clearFilters}
         >
-          <XIcon className="w-4 h-4 mr-1" />
-          Limpiar filtros
+          <XIcon className="w-3.5 h-3.5 mr-1" />
+          Limpiar
         </button>
       </div>
     </div>
@@ -893,7 +885,7 @@ const DashboardFilters = React.memo(
 
     // Retornar true para SKIP render (las props son iguales)
     return restaurantsEqual && onFilterChangeEqual && filtersEqual;
-  }
+  },
 );
 
 DashboardFilters.displayName = "DashboardFilters";

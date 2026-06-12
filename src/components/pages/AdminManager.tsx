@@ -359,13 +359,13 @@ const AdminManager: React.FC<AdminManagerProps> = ({
   return (
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
+        <h1 className="text-xl sm:text-2xl font-bold text-[#023828] uppercase tracking-widest">
           Admin Manager
         </h1>
         <div className="flex space-x-2">
           {showTabs.includes("clientes") && (
             <button
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg ${activeTab === "clientes" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"}`}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base uppercase tracking-widest transition-colors ${activeTab === "clientes" ? "bg-[#023828] text-[#82E657]" : "border-2 border-[#023828]/30 text-[#023828] hover:bg-[#C3FEFF]"}`}
               onClick={() => setActiveTab("clientes")}
             >
               Clientes
@@ -373,7 +373,7 @@ const AdminManager: React.FC<AdminManagerProps> = ({
           )}
           {showTabs.includes("sucursales") && (
             <button
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg ${activeTab === "sucursales" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"}`}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base uppercase tracking-widest transition-colors ${activeTab === "sucursales" ? "bg-[#023828] text-[#82E657]" : "border-2 border-[#023828]/30 text-[#023828] hover:bg-[#C3FEFF]"}`}
               onClick={() => setActiveTab("sucursales")}
             >
               Sucursales
@@ -383,26 +383,26 @@ const AdminManager: React.FC<AdminManagerProps> = ({
       </div>
 
       {activeTab === "clientes" && (
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="p-3 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
-            <h2 className="text-base sm:text-lg font-medium text-gray-800">
+        <div className="bg-white border border-[#023828]/10">
+          <div className="p-3 sm:p-6 border-b border-[#023828]/10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
+            <h2 className="text-base sm:text-lg font-medium text-[#023828] uppercase tracking-widest">
               Gestión de Clientes
             </h2>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-0">
               <div className="relative sm:mr-3">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <SearchIcon className="h-4 w-4 text-gray-400" />
+                  <SearchIcon className="h-4 w-4 text-[#023828]/40" />
                 </div>
                 <input
                   type="text"
-                  className="pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-[240px] text-sm sm:text-base"
+                  className="pl-10 pr-3 py-2 border-2 border-[#023828]/30 focus:outline-none focus:border-[#023828] w-full sm:w-[240px] text-sm sm:text-base text-[#023828]"
                   placeholder="Buscar por nombre..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
               <button
-                className="flex items-center justify-center px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm sm:text-base"
+                className="flex items-center justify-center px-3 sm:px-4 py-2 bg-[#023828] text-[#82E657] hover:bg-[#034d38] text-sm sm:text-base uppercase tracking-widest transition-colors"
                 onClick={() => openClientModal()}
               >
                 <PlusIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
@@ -414,8 +414,10 @@ const AdminManager: React.FC<AdminManagerProps> = ({
           {/* Loading State */}
           {loading.isLoading ? (
             <div className="p-12 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Cargando clientes...</p>
+              <div className="animate-spin h-12 w-12 border-b-2 border-[#023828] mx-auto"></div>
+              <p className="mt-4 text-[#023828]/60 text-xs uppercase tracking-widest">
+                Cargando clientes...
+              </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -491,7 +493,7 @@ const AdminManager: React.FC<AdminManagerProps> = ({
                         {client.services.includes("flex-bill") ||
                         client.services.includes("tap-order-pay") ? (
                           <div className="inline-flex items-center">
-                            <span className="text-sm sm:text-lg font-semibold text-gray-900">
+                            <span className="text-sm sm:text-lg font-medium text-gray-900">
                               {client.tableCount || 0}
                             </span>
                             <span className="text-[10px] sm:text-xs text-gray-500 ml-1">
@@ -507,7 +509,7 @@ const AdminManager: React.FC<AdminManagerProps> = ({
                       <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-center">
                         {client.services.includes("room-service") ? (
                           <div className="inline-flex items-center">
-                            <span className="text-sm sm:text-lg font-semibold text-blue-900">
+                            <span className="text-sm sm:text-lg font-medium text-blue-900">
                               {client.roomCount || 0}
                             </span>
                             <span className="text-[10px] sm:text-xs text-blue-600 ml-1">
@@ -537,14 +539,14 @@ const AdminManager: React.FC<AdminManagerProps> = ({
                       </td>
                       <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button
-                          className="text-indigo-600 hover:text-indigo-900 mr-2 sm:mr-3"
+                          className="text-[#023828] hover:text-[#82E657] mr-2 sm:mr-3 transition-colors"
                           onClick={() => openClientModal(client)}
                           title="Editar cliente"
                         >
                           <PencilIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                         </button>
                         <button
-                          className="text-red-600 hover:text-red-900"
+                          className="text-red-600 hover:text-red-900 transition-colors"
                           onClick={() => openDeleteModal("client", client)}
                           title="Eliminar cliente"
                         >
@@ -560,26 +562,26 @@ const AdminManager: React.FC<AdminManagerProps> = ({
         </div>
       )}
       {activeTab === "sucursales" && (
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="p-3 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
-            <h2 className="text-base sm:text-lg font-medium text-gray-800">
+        <div className="bg-white border border-[#023828]/10">
+          <div className="p-3 sm:p-6 border-b border-[#023828]/10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
+            <h2 className="text-base sm:text-lg font-medium text-[#023828] uppercase tracking-widest">
               Gestión de Sucursales
             </h2>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-0">
               <div className="relative sm:mr-3">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <SearchIcon className="h-4 w-4 text-gray-400" />
+                  <SearchIcon className="h-4 w-4 text-[#023828]/40" />
                 </div>
                 <input
                   type="text"
-                  className="pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-[220px] text-sm sm:text-base"
+                  className="pl-10 pr-3 py-2 border-2 border-[#023828]/30 focus:outline-none focus:border-[#023828] w-full sm:w-[220px] text-sm sm:text-base text-[#023828]"
                   placeholder="Buscar por sucursal..."
                   value={branchSearchTerm}
                   onChange={(e) => setBranchSearchTerm(e.target.value)}
                 />
               </div>
               <button
-                className="flex items-center justify-center px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm sm:text-base"
+                className="flex items-center justify-center px-3 sm:px-4 py-2 bg-[#023828] text-[#82E657] hover:bg-[#034d38] text-sm sm:text-base uppercase tracking-widest transition-colors"
                 onClick={() => openBranchModal()}
               >
                 <PlusIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
@@ -591,8 +593,10 @@ const AdminManager: React.FC<AdminManagerProps> = ({
           {/* Loading State */}
           {loading.isLoading ? (
             <div className="p-12 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Cargando sucursales...</p>
+              <div className="animate-spin h-12 w-12 border-b-2 border-[#023828] mx-auto"></div>
+              <p className="mt-4 text-[#023828]/60 text-xs uppercase tracking-widest">
+                Cargando sucursales...
+              </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -681,14 +685,14 @@ const AdminManager: React.FC<AdminManagerProps> = ({
                         </td>
                         <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-right text-sm font-medium">
                           <button
-                            className="text-indigo-600 hover:text-indigo-900 mr-2 sm:mr-3"
+                            className="text-[#023828] hover:text-[#82E657] mr-2 sm:mr-3 transition-colors"
                             onClick={() => openBranchModal(branch)}
                             title="Editar sucursal"
                           >
                             <PencilIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                           </button>
                           <button
-                            className="text-red-600 hover:text-red-900"
+                            className="text-red-600 hover:text-red-900 transition-colors"
                             onClick={() => openDeleteModal("branch", branch)}
                             title="Eliminar sucursal"
                           >

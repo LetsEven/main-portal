@@ -270,7 +270,7 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
                     </span>
                   </td>
                   <td className="px-5 py-4 whitespace-nowrap text-right">
-                    <span className="text-sm font-semibold text-gray-900">
+                    <span className="text-sm font-medium text-gray-900">
                       {formatCurrency(tx.total_amount_charged)}
                     </span>
                   </td>
@@ -301,27 +301,23 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         </div>
       </div>
 
-      {/* Paginación mejorada */}
-      <div className="flex items-center justify-between px-4 py-4 border-t border-gray-100 mt-4">
-        <div className="text-sm text-gray-600">
-          <span className="font-medium">
-            {currentPage * ITEMS_PER_PAGE + 1}
-          </span>
-          {" - "}
-          <span className="font-medium">
-            {Math.min((currentPage + 1) * ITEMS_PER_PAGE, totalCount)}
-          </span>
+      {/* Paginación */}
+      <div className="flex items-center justify-between px-4 py-4 border-t border-[#023828]/10 mt-4">
+        <div className="text-xs uppercase tracking-widest text-[#023828]/50">
+          {currentPage * ITEMS_PER_PAGE + 1}
+          {" – "}
+          {Math.min((currentPage + 1) * ITEMS_PER_PAGE, totalCount)}
           {" de "}
-          <span className="font-medium">{totalCount}</span>
+          {totalCount}
           {" transacciones"}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <button
             onClick={handlePrevPage}
             disabled={currentPage === 0}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="inline-flex items-center px-3 py-2 text-xs uppercase tracking-widest text-[#023828] border-2 border-[#023828]/20 hover:bg-[#C3FEFF] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
           >
-            <ChevronLeftIcon className="h-4 w-4 mr-1" />
+            <ChevronLeftIcon className="h-3.5 w-3.5 mr-1" />
             Anterior
           </button>
           <div className="flex items-center gap-1">
@@ -340,10 +336,10 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
                 <button
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
-                  className={`w-9 h-9 text-sm font-medium rounded-lg transition-colors ${
+                  className={`w-9 h-9 text-xs uppercase tracking-widest transition-colors ${
                     currentPage === pageNum
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-[#023828] text-[#82E657]"
+                      : "text-[#023828] border-2 border-[#023828]/20 hover:bg-[#C3FEFF]"
                   }`}
                 >
                   {pageNum + 1}
@@ -354,10 +350,10 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
           <button
             onClick={handleNextPage}
             disabled={currentPage >= totalPages - 1}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="inline-flex items-center px-3 py-2 text-xs uppercase tracking-widest text-[#023828] border-2 border-[#023828]/20 hover:bg-[#C3FEFF] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
           >
             Siguiente
-            <ChevronRightIcon className="h-4 w-4 ml-1" />
+            <ChevronRightIcon className="h-3.5 w-3.5 ml-1" />
           </button>
         </div>
       </div>

@@ -81,10 +81,10 @@ const GlobalKpiCard: React.FC<GlobalKpiCardProps> = ({
     if (thresholds) {
       if (change < thresholds.danger) return "text-red-600 bg-red-50";
       if (change < thresholds.warning) return "text-yellow-600 bg-yellow-50";
-      return "text-green-600 bg-green-50";
+      return "text-[#299E66] bg-[#82E657]/20";
     }
     return change >= 0
-      ? "text-green-600 bg-green-50"
+      ? "text-[#299E66] bg-[#82E657]/20"
       : "text-red-600 bg-red-50";
   };
   // Determinar el tipo de métrica para la gráfica
@@ -101,18 +101,18 @@ const GlobalKpiCard: React.FC<GlobalKpiCardProps> = ({
   };
   // Determinar el color para la gráfica
   const getChartColor = () => {
-    if (title === "Volumen transaccionado") return "#22c55e"; // verde
-    if (title === "Ingresos Even") return "#3b82f6"; // azul
-    if (title === "Órdenes Exitosas") return "#22c55e"; // verde
-    if (title === "Diners Activos") return "#6366f1"; // indigo
-    if (title === "Total de Transacciones") return "#6366f1"; // indigo
-    if (title === "Clientes con Pago a Meses") return "#f97316"; // naranja
+    if (title === "Volumen transaccionado") return "#82E657"; // Radioactive Grass
+    if (title === "Ingresos Even") return "#299E66"; // Shamrock
+    if (title === "Órdenes Exitosas") return "#82E657"; // Radioactive Grass
+    if (title === "Diners Activos") return "#023828"; // Evergreen
+    if (title === "Total de Transacciones") return "#023828"; // Evergreen
+    if (title === "Clientes con Pago a Meses") return "#C3FEFF"; // Icy Aqua
     if (title === "Tasa de Conversión de Invitados a Usuarios")
-      return "#a855f7"; // morado
-    if (title === "Administradores Activos") return "#9333ea"; // morado oscuro
-    if (title === "Tasa de Aprobación de Pagos") return "#10b981"; // verde esmeralda
-    if (title === "Método de Pago más Usado") return "#0ea5e9"; // azul cielo
-    return "#8884d8"; // default
+      return "#299E66"; // Shamrock
+    if (title === "Administradores Activos") return "#023828"; // Evergreen
+    if (title === "Tasa de Aprobación de Pagos") return "#82E657"; // Radioactive Grass
+    if (title === "Método de Pago más Usado") return "#C3FEFF"; // Icy Aqua
+    return "#299E66"; // Shamrock default
   };
   return (
     <>
@@ -139,7 +139,7 @@ const GlobalKpiCard: React.FC<GlobalKpiCardProps> = ({
           )}
         </div>
         <div className="mt-1.5 sm:mt-2">
-          <div className="text-lg sm:text-xl font-semibold text-gray-800 truncate">
+          <div className="text-lg sm:text-xl font-medium text-gray-800 truncate">
             {value}
           </div>
         </div>

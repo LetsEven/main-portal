@@ -85,7 +85,7 @@ const ServiceDistributionCharts: React.FC<ServiceDistributionChartsProps> = ({
   const totalOrders = ordersData.reduce((sum, item) => sum + item.value, 0);
   const totalTransactions = transactionsData.reduce(
     (sum, item) => sum + item.value,
-    0
+    0,
   );
 
   // Preparar los datos con valores formateados para el tooltip
@@ -110,7 +110,9 @@ const ServiceDistributionCharts: React.FC<ServiceDistributionChartsProps> = ({
   const titleClass = compact
     ? "text-sm sm:text-base font-medium text-gray-800 mb-1 sm:mb-2"
     : "text-base sm:text-lg font-medium text-gray-800 mb-2 sm:mb-4";
-  const containerClass = compact ? "space-y-2 sm:space-y-3" : "space-y-3 sm:space-y-6";
+  const containerClass = compact
+    ? "space-y-2 sm:space-y-3"
+    : "space-y-3 sm:space-y-6";
   const chartContainerClass = compact ? "p-2 sm:p-3" : "p-3 sm:p-6";
   // Radios adaptativos - más pequeños para dejar espacio a la leyenda
   const innerRadius = compact ? 25 : 35;
@@ -129,7 +131,7 @@ const ServiceDistributionCharts: React.FC<ServiceDistributionChartsProps> = ({
         <div className="flex flex-col items-center min-w-0">
           <div className="text-center mb-0.5 sm:mb-1">
             <p className="text-[10px] sm:text-xs text-gray-500">Total</p>
-            <p className="text-sm sm:text-base font-semibold">
+            <p className="text-sm sm:text-base font-medium">
               {formatCurrency(totalGMV)}
             </p>
           </div>
@@ -199,7 +201,7 @@ const ServiceDistributionCharts: React.FC<ServiceDistributionChartsProps> = ({
         <div className="flex flex-col items-center min-w-0">
           <div className="text-center mb-0.5 sm:mb-1">
             <p className="text-[10px] sm:text-xs text-gray-500">Total</p>
-            <p className="text-sm sm:text-base font-semibold">
+            <p className="text-sm sm:text-base font-medium">
               {formatNumber(totalOrders)}
             </p>
           </div>
@@ -269,7 +271,7 @@ const ServiceDistributionCharts: React.FC<ServiceDistributionChartsProps> = ({
         <div className="flex flex-col items-center min-w-0">
           <div className="text-center mb-0.5 sm:mb-1">
             <p className="text-[10px] sm:text-xs text-gray-500">Total</p>
-            <p className="text-sm sm:text-base font-semibold">
+            <p className="text-sm sm:text-base font-medium">
               {formatNumber(totalTransactions)}
             </p>
           </div>
@@ -312,7 +314,7 @@ const ServiceDistributionCharts: React.FC<ServiceDistributionChartsProps> = ({
                     const percent =
                       totalTransactions > 0
                         ? Math.round(
-                            (entry.payload.value / totalTransactions) * 100
+                            (entry.payload.value / totalTransactions) * 100,
                           )
                         : 0;
                     return (
