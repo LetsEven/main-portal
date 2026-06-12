@@ -449,7 +449,7 @@ export const useLeads = (params: LeadsParams = {}) => {
   return useQuery<LeadsResponse>({
     queryKey: queryKeys.leads(params),
     queryFn: () => api.getAllLeads(params),
-    staleTime: 2 * 60 * 1000,
+    staleTime: 0,
     retry: 2,
   });
 };

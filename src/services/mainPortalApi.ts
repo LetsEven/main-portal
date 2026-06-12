@@ -187,7 +187,17 @@ export interface Lead {
   phone: string | null;
   city: string | null;
   businessType: string | null;
+  status: "active" | "completed";
   createdAt: string;
+}
+
+export interface LeadUpdateData {
+  restaurantName?: string;
+  contactName?: string;
+  email?: string;
+  phone?: string | null;
+  city?: string | null;
+  businessType?: string | null;
 }
 
 export interface LeadsResponse {
@@ -199,6 +209,7 @@ export interface LeadsParams {
   limit?: number;
   offset?: number;
   search?: string;
+  status?: "active" | "completed";
 }
 
 // ===============================================
@@ -441,6 +452,7 @@ class MainPortalApiService {
     if (params.offset !== undefined)
       query.append("offset", String(params.offset));
     if (params.search) query.append("search", params.search);
+    if (params.status) query.append("status", params.status);
 
     const qs = query.toString();
     const url = `${MAIN_PORTAL_BASE}/leads${qs ? `?${qs}` : ""}`;
@@ -468,9 +480,72 @@ class MainPortalApiService {
         phone: r.phone ?? null,
         city: r.city ?? null,
         businessType: r.business_type ?? null,
+        status: r.status ?? "active",
         createdAt: r.created_at,
       })),
     };
+  }
+
+  private async leadRequest(
+    method: string,
+    path: string,
+    token: string,
+    body?: object,
+  ) {
+    const url = `${MAIN_PORTAL_BASE}${path}`;
+    const response = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.message || `HTTP error ${response.status}`);
+    }
+    return response.json();
+  }
+
+  async updateLead(
+    token: string,
+    id: string,
+    data: LeadUpdateData,
+  ): Promise<Lead> {
+    const body: any = {};
+    if (data.restaurantName !== undefined)
+      body.restaurant_name = data.restaurantName;
+    if (data.contactName !== undefined) body.contact_name = data.contactName;
+    if (data.email !== undefined) body.email = data.email;
+    if (data.phone !== undefined) body.phone = data.phone;
+    if (data.city !== undefined) body.city = data.city;
+    if (data.businessType !== undefined) body.business_type = data.businessType;
+    const json = await this.leadRequest("PUT", `/leads/${id}`, token, body);
+    const r = json.data;
+    return {
+      id: r.id,
+      restaurantName: r.restaurant_name,
+      contactName: r.contact_name,
+      email: r.email,
+      phone: r.phone ?? null,
+      city: r.city ?? null,
+      businessType: r.business_type ?? null,
+      status: r.status ?? "active",
+      createdAt: r.created_at,
+    };
+  }
+
+  async updateLeadStatus(
+    token: string,
+    id: string,
+    status: "active" | "completed",
+  ): Promise<void> {
+    await this.leadRequest("PATCH", `/leads/${id}/status`, token, { status });
+  }
+
+  async deleteLead(token: string, id: string): Promise<void> {
+    await this.leadRequest("DELETE", `/leads/${id}`, token);
   }
 
   async getInvitationStatuses(token: string): Promise<Record<string, any>> {
@@ -851,6 +926,18 @@ export function useMainPortalApi() {
     getAllLeads: (params?: LeadsParams) =>
       makeAuthenticatedRequest((token) =>
         mainPortalApiService.getAllLeads(token, params),
+      ),
+    updateLead: (id: string, data: LeadUpdateData) =>
+      makeAuthenticatedRequest((token) =>
+        mainPortalApiService.updateLead(token, id, data),
+      ),
+    updateLeadStatus: (id: string, status: "active" | "completed") =>
+      makeAuthenticatedRequest((token) =>
+        mainPortalApiService.updateLeadStatus(token, id, status),
+      ),
+    deleteLead: (id: string) =>
+      makeAuthenticatedRequest((token) =>
+        mainPortalApiService.deleteLead(token, id),
       ),
     getInvitationStatuses: () =>
       makeAuthenticatedRequest((token) =>
